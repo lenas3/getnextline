@@ -1,3 +1,5 @@
+Buffer: Veriyi geçici olarak depolamayı sağlayan veri alanı. 
+
 **STATİC VARIABLES**
 
 'static' anahtar kelimesi kullanıldığı yere göre iki farklı anlam kazanı:
