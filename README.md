@@ -42,9 +42,4 @@ return değerleri:
 
 read fonksiyonu satır farketmeksizin byte bazlı okuma yapar.
 
-----------------------------------------------------------------------------------------------------------------------------------------
-
-**TUTORIAL**
-
-
 
