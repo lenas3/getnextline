@@ -3,16 +3,17 @@
 
 #include <unistd.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #ifndef BUFFER_SIZE
 # define BUFFER_SIZE 42
-#endif
 
-char    *get_next_line(int fd);
+
+size_t	ft_length(const char *str, char c);
+char	*ft_dupe(char *str, char c);
 char    *ft_read(int fd, int buff_size, char *stack);
-char    *ft_join(char const *s1, char const *s2);
-size_t	ft_length(const char *str);
-char	*ft_dupe(char *str);
+char *ft_newstack(char *stack);
+char    *get_next_line(int fd);
 
-
-#endif 
+#endif
+#endif

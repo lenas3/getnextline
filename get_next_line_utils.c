@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: asay <asay@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/22 15:45:33 by asay              #+#    #+#             */
+/*   Updated: 2025/07/22 15:45:33 by asay             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 char	*ft_join(char const *s1, char const *s2)
@@ -10,9 +22,11 @@ char	*ft_join(char const *s1, char const *s2)
 	j = 0;
 	if (!s1 || !s2)
 		return (NULL);
-	concat = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+
+	concat = (char *)malloc((ft_length(s1, '\0') + ft_length(s2, '\0')) * sizeof(char));
 	if (!concat)
 		return (NULL);
+	write(1, "ft_join\n", 8);
 	while (s1[i] != '\0')
 	{
 		concat[i] = s1[i];
@@ -28,13 +42,42 @@ char	*ft_join(char const *s1, char const *s2)
 	return (concat);
 }
 
+size_t	ft_length(const char *str, char c)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i] != '\0' || str[i] != c)
+		i++;
+	return (i);
+}
+char	*ft_dupe(char *str, char c)
+{
+	char	*dupe;
+	size_t	i;
+
+	i = 0;
+	dupe = malloc((ft_length(str, '\0') + 1) * sizeof(char));
+	if (!dupe)
+		return (NULL);
+	write(1, "ft_dupe\n", 8);
+	while (str[i] && str[i] != c)
+	{
+		dupe[i] = str[i];
+		i++;
+	}
+	dupe[i] = '\0';
+	return (dupe);
+}
+
 char *ft_read(int fd, int buff_size, char *stack)  
 {
     char *buffer;
+	
     buffer = malloc((buff_size + 1) * sizeof(char));
     if(!buffer)
         return (NULL);
-
+	write(1, "ft_read\n", 8);
     size_t bytes;
     bytes = read(fd, buffer, buff_size);
     if(bytes <= 0)
@@ -43,37 +86,30 @@ char *ft_read(int fd, int buff_size, char *stack)
         return (stack);
     }
     buffer[bytes] = '\0';
-//yukarıda buffer[bytes] yapmamızın sebebi, read her zaman buff_size kadar okumayabilir.
-//eğer daha az okursa ve biz buffer[buff_size] yapmış olsaydım okumadığım bi bellek alanını sonlandırmaya çalışıyor olurdum, saçma.
-
     stack = ft_join(stack, buffer);
     free (buffer); // işim bitti free'liyorum.
     return (stack);
 }
 
-char	*ft_dupe(char *str)
+char *ft_newstack(char *stack)
 {
-	char	*dupe;
-	size_t	i;
+	int remainlen;
+	int linelen;
+	int i;
+	char *newstack;
 
 	i = 0;
-	dupe = (char *)malloc((ft_strlen(str) + 1) * sizeof(char));
-	if (!dupe)
+	linelen = ft_length(stack, '\n');
+	remainlen = ft_length(stack + linelen + 1, '\0');
+	
+	newstack = malloc((remainlen + 1) * sizeof(char));
+	if(!newstack)
 		return (NULL);
-	while (str[i])
+	write(1, "ft_newstack", 11);
+	while(i < remainlen)
 	{
-		dupe[i] = str[i];
+		newstack[i] = stack[linelen + i];
 		i++;
 	}
-	dupe[i] = '\0';
-	return (dupe);
-}
-size_t	ft_length(const char *str)
-{
-	size_t	i;
-
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	return (i);
+	return(newstack);
 }
