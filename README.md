@@ -42,6 +42,6 @@ return değerleri:
 - herhangi bir hata durumunda -1 döner ve errno* global değişkenini ayarlar.
         _*errno: hata durumlarında hata kodunu tutan bir global değişkendir. her hatanın kendine ait bir errno değeri vardır ve errno değeri otomatik olarak ayarlanır._
 
-read fonksiyonu satır farketmeksizin byte bazlı okuma yapar.
+read fonksiyonu içeriğin neolduğuyla ilgilenmez,sadece byte sayısına bakarak okuma yapar.
 
 
