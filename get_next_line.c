@@ -19,7 +19,7 @@ char *get_next_line(int fd)
     int len_line;
     int i;
 
-    stack = malloc(??? * sizeof(char)); ---> ERROR
+    stack = malloc(BUFFER_SIZE * sizeof(char));
     if(!stack)
         return(NULL);
     write(1, "stack\n", 6);
