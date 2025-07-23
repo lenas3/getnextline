@@ -5,12 +5,21 @@
 
 #include "get_next_line.h"
 
-// get_next_line prototipi (kendi implementasyonun)
-char *get_next_line(int fd);
-
-int main(int argc, char **argv)
+int main(void)
 {
-    int fd = open("exmple.txt", O_RDONLY);
-    printf("%s", get_next_line(fd));
-    
+    int fd = open("test.txt", O_RDONLY);
+    if (fd < 0)
+    {
+        perror("Dosya açılamadı");
+        return 1;
+    }
+
+    char *line = get_next_line(fd);
+    while (line != NULL)
+    {
+        printf("%s", line);  // genellikle satır sonunda \n var, fazladan ekleme gerekmez
+    }
+
+    close(fd);
+    return 0;
 }

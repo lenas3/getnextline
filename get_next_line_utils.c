@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-char	*ft_join(char const *s1, char const *s2)
+char	*ft_join(char *s1, char *s2)
 {
 	int		j;
 	int		i;
@@ -20,13 +20,15 @@ char	*ft_join(char const *s1, char const *s2)
 
 	i = 0;
 	j = 0;
-	if (!s1 || !s2)
+	if (!s1 && !s2)
 		return (NULL);
-
-	concat = (char *)malloc((ft_length(s1, '\0') + ft_length(s2, '\0')) * sizeof(char));
+	if (!s1)
+		return (ft_dupe(s2, '\0'));
+	if (!s2)
+		return (ft_dupe(s1, '\0'));
+	concat = malloc((ft_length(s1, '\0') + ft_length(s2, '\0') + 1) * sizeof(char));
 	if (!concat)
 		return (NULL);
-	write(1, "ft_join\n", 8);
 	while (s1[i] != '\0')
 	{
 		concat[i] = s1[i];
@@ -39,6 +41,7 @@ char	*ft_join(char const *s1, char const *s2)
 		j++;
 	}
 	concat[i] = '\0';
+
 	return (concat);
 }
 
@@ -47,10 +50,11 @@ size_t	ft_length(const char *str, char c)
 	size_t	i;
 
 	i = 0;
-	while (str[i] != '\0' || str[i] != c)
+	while (str[i] != '\0' && str[i] != c)
 		i++;
 	return (i);
 }
+
 char	*ft_dupe(char *str, char c)
 {
 	char	*dupe;
@@ -60,7 +64,6 @@ char	*ft_dupe(char *str, char c)
 	dupe = malloc((ft_length(str, '\0') + 1) * sizeof(char));
 	if (!dupe)
 		return (NULL);
-	write(1, "ft_dupe\n", 8);
 	while (str[i] && str[i] != c)
 	{
 		dupe[i] = str[i];
@@ -73,11 +76,11 @@ char	*ft_dupe(char *str, char c)
 char *ft_read(int fd, int buff_size, char *stack)  
 {
     char *buffer;
-	
+	char *temp;
+
     buffer = malloc((buff_size + 1) * sizeof(char));
     if(!buffer)
-        return (NULL);
-	write(1, "ft_read\n", 8);
+		return (NULL);
     size_t bytes;
     bytes = read(fd, buffer, buff_size);
     if(bytes <= 0)
@@ -87,9 +90,17 @@ char *ft_read(int fd, int buff_size, char *stack)
     }
     buffer[bytes] = '\0';
     stack = ft_join(stack, buffer);
-    free (buffer); // işim bitti free'liyorum.
+	free (buffer); 
     return (stack);
 }
+
+/*
+ft_read neden var ve neden veriyi stack'e atmak için tampon buffer kullanıyorum?
+neden direkt olarak stack üzerine okuma yapmayalım?
+
+geçici tampon kullanmadığım durumda stack için bellek ayrımam gerekir.
+ama okuma yapmadan ne kadar ayıracağımı bilemem.
+*/
 
 char *ft_newstack(char *stack)
 {
@@ -100,12 +111,10 @@ char *ft_newstack(char *stack)
 
 	i = 0;
 	linelen = ft_length(stack, '\n');
-	remainlen = ft_length(stack + linelen + 1, '\0');
-	
+	remainlen = ft_length(stack, '\0');	
 	newstack = malloc((remainlen + 1) * sizeof(char));
 	if(!newstack)
 		return (NULL);
-	write(1, "ft_newstack", 11);
 	while(i < remainlen)
 	{
 		newstack[i] = stack[linelen + i];

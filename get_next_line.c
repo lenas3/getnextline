@@ -18,14 +18,16 @@ char *get_next_line(int fd)
     char *line;
     int len_line;
     int i;
+    char *temp;
 
-    stack = malloc(BUFFER_SIZE * sizeof(char));
-    if(!stack)
-        return(NULL);
-    write(1, "stack\n", 6);
+    if(fd < 0 || BUFFER_SIZE < 0)
+        return (NULL);
     stack = ft_read(fd, BUFFER_SIZE, stack);
-    
-    line = ft_dupe(stack, '\n');  
-    stack = ft_dupe(ft_newstack(stack), '\0');
+
+    line = ft_dupe(stack, '\n');
+    temp = ft_newstack(stack);
+    free(stack);
+    stack = ft_dupe(temp, '\0');
+    free(temp);
     return (line);
 }
