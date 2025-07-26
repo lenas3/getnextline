@@ -12,6 +12,18 @@
 
 #include "get_next_line.h"
 
+size_t	ft_len(char *str)
+{
+	size_t	i;
+
+	i = 0;
+	if(!str)
+		return ((size_t)NULL);
+	while (str[i] != '\0')
+		i++;
+	return (i);
+}
+
 char	*ft_join(char *s1, char *s2)
 {
 	int		j;
@@ -23,10 +35,10 @@ char	*ft_join(char *s1, char *s2)
 	if (!s1 && !s2)
 		return (NULL);
 	if (!s1)
-		return (ft_dupe(s2, '\0'));
+		return (ft_strdup(s2));
 	if (!s2)
-		return (ft_dupe(s1, '\0'));
-	concat = malloc((ft_length(s1, '\0') + ft_length(s2, '\0') + 1) * sizeof(char));
+		return (ft_strdup(s1));
+	concat = malloc((ft_len(s1) + ft_len(s2) + 1) * sizeof(char));
 	if (!concat)
 		return (NULL);
 	while (s1[i] != '\0')
@@ -35,36 +47,24 @@ char	*ft_join(char *s1, char *s2)
 		i++;
 	}
 	while (s2[j] != '\0')
-	{
-		concat[i] = s2[j];
-		i++;
-		j++;
-	}
+		concat[i++] = s2[j++];
 	concat[i] = '\0';
-
+	free(s1);
 	return (concat);
 }
 
-size_t	ft_length(const char *str, char c)
-{
-	size_t	i;
-
-	i = 0;
-	while (str[i] != '\0' && str[i] != c)
-		i++;
-	return (i);
-}
-
-char	*ft_dupe(char *str, char c)
+char	*ft_strdup(char *str)
 {
 	char	*dupe;
 	size_t	i;
 
 	i = 0;
-	dupe = malloc((ft_length(str, '\0') + 1) * sizeof(char));
+	if(!str)
+		return (NULL);
+	dupe = malloc((ft_len(str) + 1) * sizeof(char));
 	if (!dupe)
 		return (NULL);
-	while (str[i] && str[i] != c)
+	while (str[i])
 	{
 		dupe[i] = str[i];
 		i++;
@@ -73,52 +73,18 @@ char	*ft_dupe(char *str, char c)
 	return (dupe);
 }
 
-char *ft_read(int fd, int buff_size, char *stack)  
+char	*ft_strchr(const char *str, int a)
 {
-    char *buffer;
-	char *temp;
-
-    buffer = malloc((buff_size + 1) * sizeof(char));
-    if(!buffer)
-		return (NULL);
-    size_t bytes;
-    bytes = read(fd, buffer, buff_size);
-    if(bytes <= 0)
-    {
-        free(buffer);
-        return (stack);
-    }
-    buffer[bytes] = '\0';
-    stack = ft_join(stack, buffer);
-	free (buffer); 
-    return (stack);
-}
-
-/*
-ft_read neden var ve neden veriyi stack'e atmak için tampon buffer kullanıyorum?
-neden direkt olarak stack üzerine okuma yapmayalım?
-
-geçici tampon kullanmadığım durumda stack için bellek ayrımam gerekir.
-ama okuma yapmadan ne kadar ayıracağımı bilemem.
-*/
-
-char *ft_newstack(char *stack)
-{
-	int remainlen;
-	int linelen;
-	int i;
-	char *newstack;
+	size_t	i;
 
 	i = 0;
-	linelen = ft_length(stack, '\n');
-	remainlen = ft_length(stack, '\0');	
-	newstack = malloc((remainlen + 1) * sizeof(char));
-	if(!newstack)
-		return (NULL);
-	while(i < remainlen)
+	while (str[i] != '\0')
 	{
-		newstack[i] = stack[linelen + i];
+		if (str[i] == (char)a)
+			return ((char *)&str[i]);
 		i++;
 	}
-	return(newstack);
+	if ((char)a == '\0')
+		return ((char *)&str[i]);
+	return (NULL);
 }

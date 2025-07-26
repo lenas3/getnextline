@@ -6,13 +6,16 @@
 #include <stdlib.h>
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 42
+# define BUFFER_SIZE 1
 #endif
 
-size_t	ft_length(const char *str, char c);
-char	*ft_dupe(char *str, char c);
-char    *ft_read(int fd, int buff_size, char *stack);
-char *ft_newstack(char *stack);
-char    *get_next_line(int fd);
+char	*ft_newstack(char *stack);
+char	*ft_getline(char *stack);
+char	*get_next_line(int fd);
+size_t	ft_len(char *str);
+char	*ft_join(char *s1, char *s2);
+char	*ft_read(int fd, int buff_size, char *stack); 
+char	*ft_strchr(const char *str, int a);
+char	*ft_strdup(char *str);
 
 #endif
