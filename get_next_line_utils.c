@@ -17,8 +17,8 @@ size_t	ft_len(char *str)
 	size_t	i;
 
 	i = 0;
-	if(!str)
-		return ((size_t)NULL);
+	if (!str)
+		return ((size_t) NULL);
 	while (str[i] != '\0')
 		i++;
 	return (i);
@@ -49,7 +49,7 @@ char	*ft_join(char *s1, char *s2)
 	while (s2[j] != '\0')
 		concat[i++] = s2[j++];
 	concat[i] = '\0';
-	free(s1);
+	free (s1);
 	return (concat);
 }
 
@@ -59,7 +59,7 @@ char	*ft_strdup(char *str)
 	size_t	i;
 
 	i = 0;
-	if(!str)
+	if (!str)
 		return (NULL);
 	dupe = malloc((ft_len(str) + 1) * sizeof(char));
 	if (!dupe)
