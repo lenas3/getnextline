@@ -6,7 +6,7 @@
 /*   By: asay <asay@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 18:46:13 by asay              #+#    #+#             */
-/*   Updated: 2025/07/28 19:04:55 by asay             ###   ########.fr       */
+/*   Updated: 2025/07/29 17:39:12 by asay             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,11 @@ char	*get_next_line(int fd)
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
+	{
+		free(stack[fd]);
+		stack[fd] = NULL;
 		return (NULL);
+	}
 	stack[fd] = ft_read(fd, BUFFER_SIZE, stack[fd]);
 	if (!stack[fd])
 		return (NULL);

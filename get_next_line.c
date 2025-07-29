@@ -6,7 +6,7 @@
 /*   By: asay <asay@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 16:45:00 by asay              #+#    #+#             */
-/*   Updated: 2025/07/25 16:45:00 by asay             ###   ########.fr       */
+/*   Updated: 2025/07/29 21:22:49 by asay             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_read(int fd, int buff_size, char *stack)
 	char	*buffer;
 	int		bytes;
 
-	if (buff_size < 1)
+	if (fd < 0 || buff_size <= 0)
 		return (NULL);
 	buffer = malloc((buff_size + 1) * sizeof(char));
 	if (!buffer)
@@ -99,7 +99,11 @@ char	*get_next_line(int fd)
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
+	{
+		free(stack);
+		stack = NULL;
 		return (NULL);
+	}
 	stack = ft_read(fd, BUFFER_SIZE, stack);
 	if (!stack)
 		return (NULL);

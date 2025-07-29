@@ -6,7 +6,7 @@
 /*   By: asay <asay@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 15:45:33 by asay              #+#    #+#             */
-/*   Updated: 2025/07/22 15:45:33 by asay             ###   ########.fr       */
+/*   Updated: 2025/07/29 21:23:13 by asay             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ size_t	ft_len(char *str)
 
 	i = 0;
 	if (!str)
-		return ((size_t) NULL);
+		return (0);
 	while (str[i] != '\0')
 		i++;
 	return (i);
@@ -77,6 +77,8 @@ char	*ft_strchr(const char *str, int a)
 {
 	size_t	i;
 
+	if (!str)
+		return (NULL);
 	i = 0;
 	while (str[i] != '\0')
 	{
