@@ -44,4 +44,8 @@ return değerleri:
 
 read fonksiyonu içeriğin neolduğuyla ilgilenmez,sadece byte sayısına bakarak okuma yapar.
 
+--------------------------------------------------------------------------------------------------------------------------------------
 
+Neden get_next_line_bonus.c Dosyasında stack[4096] Olarak Tanımlıyoruz?
+
+Linux sistemlerde açılabilecek max. dosya sayısı  genellikle 1024'tür. Ama bu limit genişletilebilir. Bu limitin genişletilebilirliğine önlem olarak 4096 tanımlaması yapıyoruz. Kendi bilgisayarımıza atanmış max. fd sayısını "ulimit -a" komutu ile görebiliyoruz. O limite kadar fd açılabilir anlamına gelir vestack[n] tanımı için n değeri o limite kadar bir değer alabilir. 
